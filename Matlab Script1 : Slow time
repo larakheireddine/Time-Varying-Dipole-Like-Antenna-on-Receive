@@ -1,0 +1,137 @@
+%Assume that A and B are coefficents that have known values which depend on omega_d.
+A = [2:50];
+B = [2:50];
+C = [2:50];
+D = [2:50];
+n = [2:50];
+T = [2:50];
+V = [2:50];
+%Using the variables defined above, define V_n as the following
+V_n = A.*V+ B.*cos(wrightOmega(n.*T))
+
+V_n =
+
+   1.0e+03 *
+
+  Columns 1 through 9
+
+    0.0020    0.0112    0.0187    0.0200    0.0387    0.0515    0.0562    0.0837    0.1037
+
+  Columns 10 through 18
+
+    0.1100    0.1521    0.1802    0.1872    0.2393    0.2666    0.3029    0.3133    0.3422
+
+  Columns 19 through 27
+
+    0.3951    0.4449    0.5050    0.5365    0.5636    0.6013    0.6514    0.7557    0.7784
+
+  Columns 28 through 36
+
+    0.8462    0.9164    0.9801    1.0463    1.0977    1.1779    1.2426    1.3215    1.3654
+
+  Columns 37 through 45
+
+    1.4242    1.5538    1.5605    1.6552    1.7250    1.8866    1.9746    2.0647    2.0726
+
+  Columns 46 through 49
+
+    2.1818    2.2574    2.4393    2.4688
+
+V_n = A.*V+ B.*cos(wrightOmega(n.*T))
+
+V_n =
+
+   1.0e+03 *
+
+  Columns 1 through 9
+
+    0.0020    0.0112    0.0187    0.0200    0.0387    0.0515    0.0562    0.0837    0.1037
+
+  Columns 10 through 18
+
+    0.1100    0.1521    0.1802    0.1872    0.2393    0.2666    0.3029    0.3133    0.3422
+
+  Columns 19 through 27
+
+    0.3951    0.4449    0.5050    0.5365    0.5636    0.6013    0.6514    0.7557    0.7784
+
+  Columns 28 through 36
+
+    0.8462    0.9164    0.9801    1.0463    1.0977    1.1779    1.2426    1.3215    1.3654
+
+  Columns 37 through 45
+
+    1.4242    1.5538    1.5605    1.6552    1.7250    1.8866    1.9746    2.0647    2.0726
+
+  Columns 46 through 49
+
+    2.1818    2.2574    2.4393    2.4688
+
+%Where A*V is equivalent to A*V_(n-1).
+%manipulate equation above to get equation for Bcos(omega_cnT).
+%If done correctly Bcos(omega_cnT) equals V_n - AV_n-1. With that equation, substitue the value of V_n with the equation defined below.
+V_n = C.*cos(wrightOmega(n.*T)) + D.*sin(wrightOmega(n.*T))
+
+V_n =
+
+  Columns 1 through 9
+
+   -1.5265    4.2417    5.6490   -4.5940    8.0628    9.0333   -9.5344   11.3072   12.9796
+
+  Columns 10 through 18
+
+  -11.0590   16.9497   17.8247    2.0300    9.8347   -1.4783   23.6726  -25.1664  -21.2626
+
+  Columns 19 through 27
+
+  -24.2726   24.5172   27.6435   29.2727  -32.9578  -15.8298  -33.0905   22.6954  -33.0060
+
+  Columns 28 through 36
+
+  -23.3197   41.5166   -5.2299   -0.6927   40.4968   -4.0400  -12.6019   50.9117  -40.4083
+
+  Columns 37 through 45
+
+  -52.2425   11.7908  -33.0881    6.1465  -54.5500   58.4928   17.3783   60.8452  -58.6417
+
+  Columns 46 through 49
+
+   11.1048  -35.0247    7.7038  -70.2777
+
+%Substitue new value of V_n and the value of V_n-1 in order to get the values of Bcos(omegacnT).
+%Both equations for V_n result in very different values for the first 10 columns, something to look into?
+B = (C.*[cos(wrightOmega(n.*T)) - A.*cos(wrightOmega((n-1).*T))] + D.*[sin(wrightOmega(n.*T)) - A.*cos(wrightOmega((n-1).*T))])/cos(wrightOmega(n.*T))
+
+B =
+
+   52.4323
+
+B .* cos(wrightOmega(n.*T))
+
+ans =
+
+  Columns 1 through 9
+
+  -51.2215   37.8541   35.0728  -52.2719   23.6768   18.6642  -51.2032   15.9154   19.3064
+
+  Columns 10 through 18
+
+  -52.4315   35.1921   45.0275  -33.0784   50.0386   34.5738   42.9770  -31.0785  -52.0063
+
+  Columns 19 through 27
+
+  -12.7833    9.6837   49.9544   17.2016  -27.1414  -49.7513  -49.5306   51.8520  -10.4200
+
+  Columns 28 through 36
+
+    9.4173   28.6431   32.3876   36.5033   13.7450   33.8290   26.4142   37.0709   -5.0762
+
+  Columns 37 through 45
+
+  -27.3504   44.1440  -51.7574  -32.9361  -48.7189   45.8014   45.9543   46.3130  -49.4714
+
+  Columns 46 through 49
+
+  -30.3600  -50.8884   40.9671  -32.7518
+
+diary off
